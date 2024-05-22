@@ -118,6 +118,54 @@ class BST {
         }
         return currentNode.value;
     }
+
+    BFS() {
+        let currentNode = this.root;
+        let results = [];
+        let queue = [];
+        queue.push(currentNode);
+
+        while (queue.length) {
+           currentNode = queue.shift();
+           results.push(currentNode.value);
+           if(currentNode.left) queue.push(currentNode.left);
+           if(currentNode.right) queue.push(currentNode.right);
+        }
+        return results;
+    }
+
+    DFSPreOrder() {
+        let results = [];
+        function traverse(currentNode) {
+            results.push(currentNode.value);
+            if (currentNode.left) traverse(currentNode.left);
+            if (currentNode.right) traverse(currentNode.right);
+        }
+        traverse(this.root);
+        return results;
+    }
+
+    DFSPostOrder() {
+        let results = [];
+        function traverse(currentNode){
+            if (currentNode.left) traverse(currentNode.left);
+            if (currentNode.right) traverse(currentNode.right);
+            results.push(currentNode.value);
+        }
+        traverse(this.root);
+        return results;
+    }
+
+	DFSInOrder(){
+	    let results = [];
+	    function traverse(currentNode){
+            if (currentNode.left) traverse(currentNode.left);
+            results.push(currentNode.value);
+            if (currentNode.right) traverse(currentNode.right);
+        }
+        traverse(this.root);
+        return results;
+	}
 }
 
 let myTree = new BST()
@@ -130,29 +178,12 @@ myTree.insert(27)
 myTree.insert(52)
 myTree.insert(82)
 
-console.log("minValueNode from root:", myTree.minValue(myTree.root));
-console.log("\nminValueNode from root.right:", myTree.minValue(myTree.root.right));
+console.log('\nBFS')
+console.log( myTree.BFS() );
+console.log('\nPreOrder')
+console.log( myTree.DFSPreOrder() );
+console.log('\nPostOrder')
+console.log( myTree.DFSPostOrder() );
+console.log('\nInOrder')
+console.log( myTree.DFSInOrder() );
 
-let myBST = new BST();
-myBST.rInsert(2);
-myBST.rInsert(1);
-myBST.rInsert(3);
-
-console.log(`Root -> ${myBST.root.value}`);
-console.log(`RootL -> ${myBST.root.left.value}`);
-console.log(`RootR -> ${myBST.root.right.value}`);
-
-myBST.deleteNode(2);
-
-console.log(`Root -> ${myBST.root.value}`);
-console.log(`RootL -> ${myBST.root.left.value}`);
-console.log(`RootR -> ${myBST.root.right}`);
-
-/*
-    EXPECTED OUTPUT:
-    ----------------
-    minValueNode from root: 18
-    
-    minValueNode from root.right: 52
-
-*/
